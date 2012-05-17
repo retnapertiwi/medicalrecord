@@ -11,40 +11,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Retna P
  */
 @Entity
-public class Medicine implements Serializable{
+@Table(name="app_role")
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column (name="medicine_id")
+    @Column (name="role_id")
     private int id;
     
     @Column (name="name", nullable=false)
     private String name;
     
-    @Column (name="description")
-    private String description;
-    
-    @OneToMany(mappedBy="medicine")
-    private List<MedicineRecord> medicineRecords;
-   
-    public Medicine() {
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @OneToMany(mappedBy="role")
+    private List<User> users;
 
     public int getId() {
         return id;
@@ -62,14 +48,13 @@ public class Medicine implements Serializable{
         this.name = name;
     }
 
-    public List<MedicineRecord> getMedicineRecords() {
-        return medicineRecords;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setMedicineRecords(List<MedicineRecord> medicineRecords) {
-        this.medicineRecords = medicineRecords;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
-
- 
+    
     
 }
