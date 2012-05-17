@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Input Data Dokter</f:facet>
+            <h:form>
+                <h:panelGrid columns="4">
+                <h:outputLabel value="Nama Dokter" for="doctorName" />
+                <h:outputText value=":"/>
+                <p:inputText id="doctorName" value="#{medicalRecordFaces.doctor.doctorName}" /><br/><br/>
+                
+                <h:outputLabel value="Alamat" for="address" />
+                <h:outputText value=":"/>
+                <p:inputTextarea id="address" value="#{medicalRecordFaces.doctor.address}" rows="3" cols="22"/><br/><br/>
+                
+                <h:outputLabel value="No. Telp" for="phone" />
+                <h:outputText value=": "/>
+                <p:inputText value="#{medicalRecordFaces.doctor.phone}" id="phone">
+                    <f:validateLength minimum="6" maximum="12"/>
+                    <f:convertNumber pattern="##,########"/>
+                </p:inputText>
+                <br/><br/>
+                
+                <p:commandButton value="Submit"/>
+            </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

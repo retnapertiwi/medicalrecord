@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Registrasi Pasien</f:facet>
+            <h:form>
+                <h:panelGrid columns="4">
+                <h:outputLabel value="Nama" for="name" />
+                <h:outputText value=": "/>
+                <p:inputText id="name" value="#{patientRegistrationFaces.patient.name}" />
+                <br/><br/>
+                
+                <h:outputLabel value="Jenis Kelamin" for="gender" />
+                <h:outputText value=": "/>
+                <p:selectOneRadio style="display:inline-block;" value="#{patientRegistrationFaces.patient.gender}" id="gender">
+                    <f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
+                    <f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
+                </p:selectOneRadio>
+                <br/><br/>
+                
+                <h:outputLabel value="Tanggal lahir" for="birthDate" />
+                <h:outputText value=": " />
+                <p:calendar value="#{patientRegistrationFaces.patient.birthDate}" id="birthDate" />
+                <br/><br/>
+                
+                <h:outputLabel value="Alamat" for="address" />
+                <h:outputText value=": "/>
+                <p:inputTextarea value="#{patientRegistrationFaces.patient.address}" id="address" rows="3" cols="22"/>
+                <br/><br/>
+                
+                <h:outputLabel value="No. Telp" for="phone" />
+                <h:outputText value=": "/>
+                <p:inputText value="#{patientRegistrationFaces.patient.phone}" id="phone">
+                    <f:validateLength minimum="6" maximum="12"/>
+                    <f:convertNumber pattern="##,########"/>
+                </p:inputText>
+                <br/><br/>
+             
+                <p:commandButton value="Submit" 
+                                 action="/medical-record.xhtml?faces-redirect=true&amp;includeViewParams=true"/>
+            </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>
