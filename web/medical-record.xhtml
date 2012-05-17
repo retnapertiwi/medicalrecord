@@ -34,7 +34,7 @@
                 <h:outputLabel value="Obat" for="medicine" />
                 <h:outputText value=":"/>
                 <p:selectManyCheckbox value="" layout="pageDirection">
-                    <f:selectItems value=""/>
+                    <f:selectItems value="#{medicalRecordFaces.medicine.name}"/>
                 </p:selectManyCheckbox><br/><br/>
                 
                 <p:commandButton value="Submit"/>
