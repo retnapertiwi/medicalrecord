@@ -14,7 +14,7 @@
                 <h:panelGrid columns="4">
                 <h:outputLabel value="Nama Pasien" for="name" />
                 <h:outputText value=":"/>
-                <p:inputText id="username" value="#{medicalRecordFaces.diagnose.patient}" /><br/><br/>
+                <p:inputText id="username" value="" /><br/><br/>
                 
                 <h:outputLabel value="Tanggal" />
                 <h:outputText value=":"/>
@@ -22,15 +22,20 @@
                 
                 <h:outputLabel value="Dokter" for="doctorName" />
                 <h:outputText value=":"/>
-                <p:inputText id="doctorName" value="#{medicalRecordFaces.doctor.doctorName}" /><br/><br/>
+                <p:selectOneMenu id="doctorName" value="" >
+                    <f:selectItem itemLabel="Pilih Dokter" itemValue=""/>
+                    <f:selectItems value=""/>
+                </p:selectOneMenu><br/><br/>
                 
                 <h:outputLabel value="Diagnosa" for="diagnose" />
                 <h:outputText value=":"/>
-                <p:inputTextarea id="diagnose" value="#{medicalRecordFaces.diagnose.diagnose}" rows="3" cols="22"/><br/><br/>
+                <p:inputTextarea id="diagnose" value="" rows="3" cols="22"/><br/><br/>
                 
                 <h:outputLabel value="Obat" for="medicine" />
                 <h:outputText value=":"/>
-                <p:inputTextarea id="medicine" value="#{medicalRecordFaces.diagnose.diagnose}" rows="3" cols="22"/><br/><br/>
+                <p:selectManyCheckbox value="" layout="pageDirection">
+                    <f:selectItems value=""/>
+                </p:selectManyCheckbox><br/><br/>
                 
                 <p:commandButton value="Submit"/>
             </h:panelGrid>
