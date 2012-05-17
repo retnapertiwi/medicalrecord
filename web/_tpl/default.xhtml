@@ -17,10 +17,11 @@
         <h:form prependId="false" id="formMenu">
             <p:menubar>
                 <p:menuitem value="Home" url="/faces/index.xhtml" />
-                <p:menuitem value="Registrasi Pasien" />
-                <p:menuitem value="Rekam medis" />
-                <p:menuitem value="Dokter" />
-                <p:menuitem value="Obat" />
+                <p:menuitem value="Registrasi Pasien" url="/faces/patient-registration.xhtml" />
+                <p:menuitem value="Rekam Medis" url="/faces/medical-record.xhtml"/>
+                <p:menuitem value="Dokter" url="/faces/doctor-add.xhtml"/>
+                <p:menuitem value="Obat" url="/faces/medicine-add.xhtml"/>
+                <p:menuitem value="User" url="/faces/user-add.xhtml" />
                 <p:menuitem value="Logout"/>
             </p:menubar>
         </h:form>

@@ -1,8 +1,10 @@
 package com.medicalrecord.web;
 
 import com.medicalrecord.model.Patient;
+import com.medicalrecord.service.PatientService;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 /**
@@ -11,6 +13,9 @@ import javax.inject.Named;
 @RequestScoped
 @Named
 public class PatientRegistrationFaces {
+    
+    @EJB
+    private PatientService patientService;
     
     private Patient patient;
     
@@ -27,4 +32,8 @@ public class PatientRegistrationFaces {
         this.patient = patient;
     }
     
+    public void addPatient(){
+        System.out.println(patient.getBirthDate()+patient.getName());
+       patientService.save(patient);
+    }
 }

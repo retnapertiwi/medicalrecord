@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.medicalrecord.service;
 
 import com.medicalrecord.model.Patient;
@@ -11,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
  * @author Retna P
  */
 @Stateless
@@ -24,5 +19,21 @@ public class PatientService {
         return this.entityManager.
                 createQuery("from Patient", Patient.class).
                 getResultList();
+    }
+    
+    public Patient get(Long id) {
+        return this.entityManager.find(Patient.class, id);
+    }
+    
+    public void save(Patient toSave) {
+        this.entityManager.persist(toSave);
+    }
+    
+    public Patient merge(Patient toMerge) {
+        return this.entityManager.merge(toMerge);
+    }
+    
+    public void delete(Patient toDelete) {
+        this.entityManager.remove(toDelete);
     }
 }
