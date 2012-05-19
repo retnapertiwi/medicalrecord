@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Input Data User</f:facet>
+            <h:form>
+                <h:panelGrid columns="4">
+                <h:outputLabel value="Username" for="username" />
+                <h:outputText value=":"/>
+                <p:inputText id="username" value="#{userFaces.user.username}" /><br/><br/>
+                
+                <h:outputLabel value="Password" for="password" />
+                <h:outputText value=":"/>
+                <p:password id="password" value="#{userFaces.user.password}" /><br/><br/>
+                
+                <h:outputLabel value="Role" for="role" />
+                <h:outputText value=": "/>
+                <p:inputText id="role" value="#{userFaces.user.role}" /><br/><br/>
+                
+                <p:commandButton value="Submit" action="#{userFaces.addUser()}"/>
+            </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>
