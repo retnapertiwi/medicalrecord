@@ -14,13 +14,13 @@
                 <h:panelGrid columns="4">
                 <h:outputLabel value="Nama Obat" for="medicineName" />
                 <h:outputText value=":"/>
-                <p:inputText id="medicineName" value="" /><br/><br/>
+                <p:inputText id="name" value="#{medicineFaces.medicine.name}" /><br/><br/>
                 
                 <h:outputLabel value="Deskripsi" for="description" />
                 <h:outputText value=":"/>
-                <p:inputTextarea id="description" value="" rows="3" cols="22"/><br/><br/>
+                <p:inputTextarea id="description" value="#{medicineFaces.medicine.description}" rows="3" cols="22"/><br/><br/>
                 
-                <p:commandButton value="Submit"/>
+                <p:commandButton value="Submit" action="#{medicineFaces.addMedicine()}"/>
             </h:panelGrid>
             </h:form>
         </p:panel>
