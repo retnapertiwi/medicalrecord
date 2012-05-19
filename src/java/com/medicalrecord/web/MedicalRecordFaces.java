@@ -4,6 +4,10 @@
  */
 package com.medicalrecord.web;
 
+import com.medicalrecord.model.MedicalRecord;
+import com.medicalrecord.service.MedicalRecordService;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.bean.RequestScoped;
 
@@ -15,8 +19,26 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class MedicalRecordFaces {
 
-    /** Creates a new instance of MedicalRecordFaces */
-    public MedicalRecordFaces() {
-        
+    @EJB
+    private MedicalRecordService medicalRecordService;
+    
+    private MedicalRecord medicalRecord;
+    
+    @PostConstruct
+    public void postConstruct() {
+        if (this.medicalRecord == null) this.medicalRecord = new MedicalRecord();
+    }
+    
+    public MedicalRecord getMedicalRecord() {
+        return medicalRecord;
+    }
+
+    public void setMedicalRecord(MedicalRecord medicalRecord) {
+        this.medicalRecord = medicalRecord;
+    }
+    
+    public void addMedicalRecord(){
+        System.out.println(medicalRecord.getPatient()+medicalRecord.getDiagnose()+medicalRecord.getDoctor());
+        medicalRecordService.save(medicalRecord);
     }
 }
