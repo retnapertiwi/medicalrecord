@@ -10,44 +10,95 @@
     <ui:define name="content">
         <p:panel>
             <f:facet name="header">Form Registrasi Pasien</f:facet>
-            <h:form>
-                <h:panelGrid columns="4">
+            <h:form id="form">
+                <h:panelGrid columns="5">
                 <h:outputLabel value="Nama" for="name" />
                 <h:outputText value=": "/>
-                <p:inputText id="name" value="#{patientRegistrationFaces.patient.name}" />
-                <br/><br/>
+                <p:inputText id="name" value="#{patientRegistrationFaces.patient.name}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="name"/><br/><br/>
                 
                 <h:outputLabel value="Jenis Kelamin" for="gender" />
                 <h:outputText value=": "/>
-                <p:selectOneRadio style="display:inline-block;" value="#{patientRegistrationFaces.patient.gender}" id="gender">
+                <p:selectOneRadio style="display:inline-block;" value="#{patientRegistrationFaces.patient.gender}" id="gender" required="true" requiredMessage="Harus diisi">
                     <f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
                     <f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
                 </p:selectOneRadio>
-                <br/><br/>
+                <h:message for="gender"/><br/><br/>
                 
                 <h:outputLabel value="Tanggal lahir" for="birthDate" />
                 <h:outputText value=": " />
-                <p:calendar value="#{patientRegistrationFaces.patient.birthDate}" id="birthDate" />
-                <br/><br/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{patientRegistrationFaces.patient.birthDate}" id="birthDate" required="true" requiredMessage="Harus diisi">
+                </p:calendar>
+                <h:message for="birthDate"/><br/><br/>
                 
                 <h:outputLabel value="Alamat" for="address" />
                 <h:outputText value=": "/>
-                <p:inputTextarea value="#{patientRegistrationFaces.patient.address}" id="address" rows="3" cols="22"/>
-                <br/><br/>
+                <p:inputTextarea value="#{patientRegistrationFaces.patient.address}" id="address" rows="3" cols="22" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="address"/><br/><br/>
                 
                 <h:outputLabel value="No. Telp" for="phone" />
                 <h:outputText value=": "/>
-                <p:inputText value="#{patientRegistrationFaces.patient.phone}" id="phone">
+                <p:inputText value="#{patientRegistrationFaces.patient.phone}" id="phone" required="true" requiredMessage="Harus diisi">
                     <f:validateLength minimum="6" maximum="12"/>
                     <f:convertNumber pattern="##,########"/>
                 </p:inputText>
-                <br/><br/>
+                <h:message for="phone"/><br/><br/>
              
-                <p:commandButton value="Submit" 
-                                 action="#{patientRegistrationFaces.addPatient()}"/>
+                <p:commandButton update="form, :dataPatient" value="Submit" actionListener="#{patientRegistrationFaces.addPatient()}">
+                </p:commandButton>
             </h:panelGrid>
             </h:form>
         </p:panel>
+        
+        <h:form id="dataPatient">  
+            <p:dataTable id="basic" var="patient" value="#{patientRegistrationFaces.findAll}">  
+                <p:column id="modelHeader">  
+                    <f:facet name="header">  
+                        Nama 
+                    </f:facet>  
+                    <h:outputText value="#{patient.name}" />  
+                </p:column>  
+
+                <p:column>  
+                    <f:facet name="header">  
+                        Jenis Kelamin  
+                    </f:facet>  
+                    <h:outputText value="#{patient.gender}" />  
+                </p:column>
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        Tanggal Lahir  
+                    </f:facet>  
+                    <h:outputText value="#{patient.birthDate}">
+                    </h:outputText>
+                </p:column>
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        Alamat  
+                    </f:facet>  
+                    <h:outputText value="#{patient.address}" />  
+                </p:column>
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        No. Telp  
+                    </f:facet>  
+                    <h:outputText value="#{patient.phone}" />  
+                </p:column>
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        Action  
+                    </f:facet>
+                    <h:link outcome="/patient-edit.xhtml" value="Edit">
+                        <f:param name="id" value="#{patient.id}" />
+                    </h:link>
+                </p:column>
+
+            </p:dataTable>  
+        </h:form> 
     </ui:define>
 
 </ui:composition>

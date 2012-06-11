@@ -10,24 +10,68 @@
     <ui:define name="content">
         <p:panel>
             <f:facet name="header">Form Input Data User</f:facet>
-            <h:form>
-                <h:panelGrid columns="4">
+            <h:form id="form">
+                <h:panelGrid columns="5">
                 <h:outputLabel value="Username" for="username" />
                 <h:outputText value=":"/>
-                <p:inputText id="username" value="#{userFaces.user.username}" /><br/><br/>
+                <p:inputText id="username" value="#{userFaces.user.username}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="username"/><br/><br/>
                 
                 <h:outputLabel value="Password" for="password" />
                 <h:outputText value=":"/>
-                <p:password id="password" value="#{userFaces.user.password}" /><br/><br/>
+                <p:password id="password" value="#{userFaces.user.password}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="password"/><br/><br/>
                 
                 <h:outputLabel value="Role" for="role" />
                 <h:outputText value=": "/>
-                <p:inputText id="role" value="#{userFaces.user.role}" /><br/><br/>
+                <p:selectOneMenu id="role" value="#{userFaces.role.id}" required="true" requiredMessage="Harus diisi">
+                    <f:selectItems value="#{userFaces.roles}" var="r" itemValue="#{r.id}" itemLabel="#{r.name}" />
+                </p:selectOneMenu>
+                <h:message for="role"/><br/><br/>
                 
-                <p:commandButton value="Submit" action="#{userFaces.addUser()}"/>
+                <p:commandButton update="form, :dataUser" value="Submit" actionListener="#{userFaces.addUser()}">
+                </p:commandButton>
             </h:panelGrid>
             </h:form>
         </p:panel>
+        <h:form id="dataUser">  
+            <p:dataTable id="basic" var="user" value="#{userFaces.findAll}">  
+                <p:column id="modelHeader">  
+                    <f:facet name="header">  
+                        Username  
+                    </f:facet>  
+                    <h:outputText value="#{user.username}" />  
+                </p:column>  
+
+                <p:column>  
+                    <f:facet name="header">  
+                        Password  
+                    </f:facet>  
+                    <h:outputText value="#{user.password}" />  
+                </p:column>  
+
+                <p:column>  
+                    <f:facet name="header">  
+                        Role  
+                    </f:facet>  
+                    <h:outputText value="#{user.role.name}" />  
+                </p:column> 
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        Action  
+                    </f:facet>
+                    <h:link outcome="/user-edit.xhtml" value="Edit">
+                        <f:param name="id" value="#{user.id}" />
+                    </h:link>
+                    &nbsp;
+                    <p:commandLink value="Delete" actionListener="#{userFaces.deleteUser(user)}" update=":dataUser">
+                        <f:ajax render="@form"/>
+                    </p:commandLink> 
+                </p:column>
+ 
+            </p:dataTable>  
+        </h:form>  
     </ui:define>
 
 </ui:composition>

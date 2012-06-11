@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Edit Pasien</f:facet>
+            <h:form id="form">
+                <h:inputHidden value="#{patientEditFaces.patient.id}" />
+                <h:panelGrid columns="5">
+                <h:outputLabel value="Nama" for="name" />
+                <h:outputText value=": "/>
+                <p:inputText id="name" value="#{patientEditFaces.patient.name}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="name"/><br/><br/>
+                
+                <h:outputLabel value="Jenis Kelamin" for="gender" />
+                <h:outputText value=": "/>
+                <p:selectOneRadio style="display:inline-block;" value="#{patientEditFaces.patient.gender}" id="gender" required="true" requiredMessage="Harus diisi">
+                    <f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
+                    <f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
+                </p:selectOneRadio>
+                <h:message for="gender"/><br/><br/>
+                
+                <h:outputLabel value="Tanggal lahir" for="birthDate" />
+                <h:outputText value=": " />
+                <p:calendar pattern="dd/MM/yyyy" value="#{patientEditFaces.patient.birthDate}" id="birthDate" required="true" requiredMessage="Harus diisi">  
+                </p:calendar>
+                <h:message for="birthDate"/><br/><br/>
+                
+                <h:outputLabel value="Alamat" for="address" />
+                <h:outputText value=": "/>
+                <p:inputTextarea value="#{patientEditFaces.patient.address}" id="address" rows="3" cols="22" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="address"/><br/><br/>
+                
+                <h:outputLabel value="No. Telp" for="phone" />
+                <h:outputText value=": "/>
+                <p:inputText value="#{patientEditFaces.patient.phone}" id="phone" required="true" requiredMessage="Harus diisi">
+                    <f:validateLength minimum="6" maximum="12"/>
+                    <f:convertNumber pattern="##,########"/>
+                </p:inputText>
+                <h:message for="phone"/><br/><br/>
+             
+            </h:panelGrid>
+                 <p:commandButton update="form" value="Update" actionListener="#{patientEditFaces.updatePatient()}"/>
+                <p:commandButton action="patient-registration.xhtml" value="Kembali ke list data pasien" />
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

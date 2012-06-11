@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Edit Data Role</f:facet>
+            <h:form id="form">
+                <h:inputHidden value="#{roleEditFaces.role.id}" />
+                <h:panelGrid columns="5">
+                <h:outputLabel value="Role" for="role" />
+                <h:outputText value=":*"/>
+                <p:inputText id="name" value="#{roleEditFaces.role.name}" required="true" requiredMessage="Harus diisi" />
+                <h:message for="name"/><br/><br/>
+                
+            </h:panelGrid>
+                <p:commandButton update="form" value="Update" actionListener="#{roleEditFaces.updateRole()}"/>
+                <p:commandButton action="role-add.xhtml" value="Kembali ke list data role" />
+            </h:form>
+        </p:panel>
+   
+    </ui:define>
+
+</ui:composition>

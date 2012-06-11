@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Edit Data Dokter</f:facet>
+            <h:form id="form">
+                <h:panelGrid columns="5" >
+                <h:outputLabel value="Nama Dokter" for="doctorName" />
+                <h:outputText value=":"/>
+                <p:inputText id="doctorName" value="#{doctorEditFaces.doctor.name}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="doctorName"/><br/><br/>
+                
+                <h:outputLabel value="Alamat" for="address" />
+                <h:outputText value=":"/>
+                <p:inputTextarea id="address" value="#{doctorEditFaces.doctor.address}" rows="3" cols="22" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="address"/><br/><br/>
+                
+                <h:outputLabel value="No. Telp" for="phone" />
+                <h:outputText value=": "/>
+                <p:inputText value="#{doctorEditFaces.doctor.phone}" id="phone" required="true" requiredMessage="Harus diisi">
+                    <f:validateLength minimum="6" maximum="12"/>
+                    <f:convertNumber pattern="##,########"/>
+                </p:inputText>
+                <h:message for="phone"/><br/><br/>
+                
+            </h:panelGrid>
+                <p:commandButton update="form" value="Update" actionListener="#{doctorEditFaces.addDoctor()}"/>
+                <p:commandButton action="doctor-add.xhtml" value="Kembali ke list data dokter" />
+            </h:form>
+        </p:panel> 
+    </ui:define>
+
+</ui:composition>

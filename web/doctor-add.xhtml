@@ -10,28 +10,69 @@
     <ui:define name="content">
         <p:panel>
             <f:facet name="header">Form Input Data Dokter</f:facet>
-            <h:form>
-                <h:panelGrid columns="4">
+            <h:form id="form">
+                <h:panelGrid columns="5" >
                 <h:outputLabel value="Nama Dokter" for="doctorName" />
                 <h:outputText value=":"/>
-                <p:inputText id="doctorName" value="#{doctorFaces.doctor.name}" /><br/><br/>
+                <p:inputText id="doctorName" value="#{doctorFaces.doctor.name}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="doctorName"/><br/><br/>
                 
                 <h:outputLabel value="Alamat" for="address" />
                 <h:outputText value=":"/>
-                <p:inputTextarea id="address" value="#{doctorFaces.doctor.address}" rows="3" cols="22"/><br/><br/>
+                <p:inputTextarea id="address" value="#{doctorFaces.doctor.address}" rows="3" cols="22" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="address"/><br/><br/>
                 
                 <h:outputLabel value="No. Telp" for="phone" />
                 <h:outputText value=": "/>
-                <p:inputText value="#{doctorFaces.doctor.phone}" id="phone">
+                <p:inputText value="#{doctorFaces.doctor.phone}" id="phone" required="true" requiredMessage="Harus diisi">
                     <f:validateLength minimum="6" maximum="12"/>
                     <f:convertNumber pattern="##,########"/>
                 </p:inputText>
-                <br/><br/>
+                <h:message for="phone"/><br/><br/>
                 
-                <p:commandButton value="Submit" action="#{doctorFaces.addDoctor()}"/>
+                <p:commandButton update="form, :dataDoctor" value="Submit" actionListener="#{doctorFaces.addDoctor()}">
+                </p:commandButton>
             </h:panelGrid>
             </h:form>
         </p:panel>
+        <h:form id="dataDoctor">  
+            <p:dataTable id="basic" var="doctor" value="#{doctorFaces.findAll}">  
+                <p:column id="modelHeader">  
+                    <f:facet name="header">  
+                        Nama Dokter  
+                    </f:facet>  
+                    <h:outputText value="#{doctor.name}" />  
+                </p:column>  
+
+                <p:column>  
+                    <f:facet name="header">  
+                        Alamat  
+                    </f:facet>  
+                    <h:outputText value="#{doctor.address}" />  
+                </p:column>  
+
+                <p:column>  
+                    <f:facet name="header">  
+                        No. Telp  
+                    </f:facet>  
+                    <h:outputText value="#{doctor.phone}" />  
+                </p:column>  
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        Action  
+                    </f:facet>
+                    <h:link outcome="/doctor-edit.xhtml" value="Edit">
+                        <f:param name="id" value="#{doctor.id}" />
+                    </h:link>
+                    &nbsp;
+                    <h:commandLink value="Delete" actionListener="#{doctorFaces.deleteDoctor(doctor)}" update=":dataDoctor">
+                        <f:ajax render="@form"/>
+                    </h:commandLink> 
+                </p:column>
+
+            </p:dataTable>  
+        </h:form>  
     </ui:define>
 
 </ui:composition>

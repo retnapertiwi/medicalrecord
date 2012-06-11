@@ -3,17 +3,21 @@ package com.medicalrecord.web;
 import com.medicalrecord.model.Patient;
 import com.medicalrecord.service.PatientService;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  * @author retna p
  */
-@RequestScoped
-@Named
-public class PatientRegistrationFaces {
+@ViewScoped
+@ManagedBean
+public class PatientEditFaces {
+    
+    private Integer patientId;
     
     @EJB
     private PatientService patientService;
@@ -23,6 +27,13 @@ public class PatientRegistrationFaces {
     @PostConstruct
     public void postConstruct() {
         if (this.patient == null) this.patient = new Patient();
+        
+        Map<String, String> params = 
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+	  this.patientId = Integer.valueOf(params.get("id"));
+          System.out.println("Patient id is: " + this.patientId);
+          
+          this.patient = this.patientService.get(patientId);
     }
 
     public Patient getPatient() {
@@ -33,10 +44,14 @@ public class PatientRegistrationFaces {
         this.patient = patient;
     }
     
+    public void updatePatient() {
+        System.out.println("merge patient: " + patient.getName());
+        patientService.merge(patient);
+    }
+    
     public void addPatient(){
         System.out.println(patient.getBirthDate()+patient.getName());
        patientService.save(patient);
-       patient = new Patient();
     }
     
     public List<Patient> getFindAll(){

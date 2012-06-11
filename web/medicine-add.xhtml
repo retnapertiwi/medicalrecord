@@ -10,20 +10,55 @@
     <ui:define name="content">
         <p:panel>
             <f:facet name="header">Form Input Data Obat</f:facet>
-            <h:form>
-                <h:panelGrid columns="4">
+            <h:form id="form">
+                <h:panelGrid columns="5">
                 <h:outputLabel value="Nama Obat" for="medicineName" />
                 <h:outputText value=":"/>
-                <p:inputText id="name" value="#{medicineFaces.medicine.name}" /><br/><br/>
+                <p:inputText id="name" value="#{medicineFaces.medicine.name}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="name"/><br/><br/>
                 
                 <h:outputLabel value="Deskripsi" for="description" />
                 <h:outputText value=":"/>
-                <p:inputTextarea id="description" value="#{medicineFaces.medicine.description}" rows="3" cols="22"/><br/><br/>
+                <p:inputTextarea id="description" value="#{medicineFaces.medicine.description}" rows="3" cols="22" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="description"/><br/><br/>
                 
-                <p:commandButton value="Submit" action="#{medicineFaces.addMedicine()}"/>
+                <p:commandButton update="form, :dataMedicine" value="Submit" actionListener="#{medicineFaces.addMedicine()}">
+                </p:commandButton>
             </h:panelGrid>
             </h:form>
         </p:panel>
+        
+        <h:form id="dataMedicine">  
+            <p:dataTable id="basic" var="medicine" value="#{medicineFaces.findAll}">  
+                <p:column id="modelHeader">  
+                    <f:facet name="header">  
+                        Nama Obat  
+                    </f:facet>  
+                    <h:outputText value="#{medicine.name}" />  
+                </p:column>  
+
+                <p:column>  
+                    <f:facet name="header">  
+                        Deskripsi  
+                    </f:facet>  
+                    <h:outputText value="#{medicine.description}" />  
+                </p:column> 
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        Action  
+                    </f:facet>
+                    <h:link outcome="/medicine-edit.xhtml" value="Edit">
+                        <f:param name="id" value="#{medicine.id}" />
+                    </h:link>
+                    &nbsp;
+                    <h:commandLink value="Delete" actionListener="#{medicineFaces.deleteMedicine(medicine)}" update=":dataMedicine">
+                        <f:ajax render="@form"/>
+                    </h:commandLink> 
+                </p:column>
+
+            </p:dataTable>  
+        </h:form>  
     </ui:define>
 
 </ui:composition>

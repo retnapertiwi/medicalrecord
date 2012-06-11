@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Edit Data User</f:facet>
+            <h:form id="form">
+                <h:inputHidden value="#{userEditFaces.user.id}" />
+                <h:panelGrid columns="5">
+                <h:outputLabel value="Username" for="username" />
+                <h:outputText value=":"/>
+                <p:inputText id="username" value="#{userEditFaces.user.username}" required="true" requiredMessage="Harus diisi"/>
+                <h:message for="username"/><br/><br/>
+                
+                <h:outputLabel value="Password" for="password" />
+                <h:outputText value=":"/>
+                <p:password id="password" value="#{userEditFaces.user.password}" />
+                <h:message for="password"/><br/><br/>
+                
+                <h:outputLabel value="Role" for="role" />
+                <h:outputText value=": "/>
+                <p:selectOneMenu id="role" value="#{userEditFaces.role.id}" required="true" requiredMessage="Harus diisi">
+                    <f:selectItems value="#{userEditFaces.roles}" var="r" itemValue="#{r.id}" itemLabel="#{r.name}" />
+                </p:selectOneMenu>
+                <h:message for="role"/><br/><br/>
+                
+                
+            </h:panelGrid>
+                <p:commandButton update="form" value="Update" actionListener="#{userEditFaces.updateUser()}"/>
+                <p:commandButton action="user-add.xhtml" value="Kembali ke list data user" />
+            </h:form>
+        </p:panel> 
+    </ui:define>
+
+</ui:composition>

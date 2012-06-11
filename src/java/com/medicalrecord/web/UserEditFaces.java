@@ -8,19 +8,25 @@ import com.medicalrecord.model.Role;
 import com.medicalrecord.model.User;
 import com.medicalrecord.service.RoleService;
 import com.medicalrecord.service.UserService;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Retna P
  */
-@Named(value = "userFaces")
-@RequestScoped
-public class UserFaces {
+@ViewScoped
+@ManagedBean
+public class UserEditFaces implements Serializable{
+    
+    private Integer userId;
+    
     @EJB
     private UserService userService;
     
@@ -35,6 +41,13 @@ public class UserFaces {
     public void postConstruct() {
         if (this.user == null) this.user = new User();
         if (this.role == null) this.role = new Role();
+        
+        Map<String, String> params =
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+            this.userId = Integer.valueOf(params.get("id"));
+            System.out.println("User id is: " + this.userId);
+
+            this.user = this.userService.get(userId);
     }
     
     public User getUser() {
@@ -53,16 +66,9 @@ public class UserFaces {
         this.role = role;
     }
     
-    public void addUser(){
-        System.out.println(" " +user + role.getId());
-        
-        this.userService.save(this.user, this.role.getId());
-        
-        user = new User();
-    }
-    
-    public void deleteUser(User user){
-        this.userService.delete(user);
+    public void updateUser(){
+        System.out.println("merge user: " + user.getUsername());
+        userService.merge(user);
     }
     
     public List<Role> getRoles(){ 
@@ -72,5 +78,9 @@ public class UserFaces {
     
     public List<User> getFindAll(){
         return userService.findAll();
+    }
+    
+    public void editUser(User user) {
+        this.user = user;
     }
 }

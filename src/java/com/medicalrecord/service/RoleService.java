@@ -4,9 +4,9 @@
  */
 package com.medicalrecord.service;
 
-import com.medicalrecord.model.Medicine;
-import javax.ejb.Stateless;
+import com.medicalrecord.model.Role;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,29 +15,29 @@ import javax.persistence.PersistenceContext;
  * @author Retna P
  */
 @Stateless
-public class MedicineService {
+public class RoleService {
     @PersistenceContext
     private EntityManager entityManager;
     
-    public List<Medicine> findAll() {
+    public List<Role> findAll() {
         return this.entityManager.
-                createQuery("select m from Medicine m", Medicine.class).
+                createQuery("select r from Role r", Role.class).
                 getResultList();
     }
     
-    public Medicine get(int id) {
-        return this.entityManager.find(Medicine.class, id);
+    public Role get(int id) {
+        return this.entityManager.find(Role.class, id);
     }
     
-    public void save(Medicine toSave) {
+    public void save(Role toSave) {
         this.entityManager.persist(toSave);
     }
     
-    public Medicine merge(Medicine toMerge) {
+    public Role merge(Role toMerge) {
         return this.entityManager.merge(toMerge);
     }
     
-    public void delete(Medicine toDelete) {
+    public void delete(Role toDelete) {
         this.entityManager.remove(this.entityManager.merge(toDelete));
     }
 }

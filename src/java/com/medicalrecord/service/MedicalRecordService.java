@@ -4,7 +4,9 @@
  */
 package com.medicalrecord.service;
 
+import com.medicalrecord.model.Doctor;
 import com.medicalrecord.model.MedicalRecord;
+import com.medicalrecord.model.Medicine;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,7 +31,13 @@ public class MedicalRecordService {
         return this.entityManager.find(MedicalRecord.class, id);
     }
     
-    public void save(MedicalRecord toSave) {
+    public void save(MedicalRecord toSave, int doctorId) {
+        Doctor doctor = this.entityManager.getReference(Doctor.class, doctorId);
+        toSave.setDoctor(doctor);
+        
+//        Medicine medicine = this.entityManager.getReference(Medicine.class, medicineId);
+//        toSave.setMedicinerecords(medicine);
+        
         this.entityManager.persist(toSave);
     }
     
@@ -40,4 +48,6 @@ public class MedicalRecordService {
     public void delete(MedicalRecord toDelete) {
         this.entityManager.remove(toDelete);
     }
+    
+
 }

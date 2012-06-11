@@ -17,11 +17,11 @@ public class PatientService {
     
     public List<Patient> findAll() {
         return this.entityManager.
-                createQuery("from Patient", Patient.class).
+                createQuery("select p from Patient p", Patient.class).
                 getResultList();
     }
     
-    public Patient get(Long id) {
+    public Patient get(int id) {
         return this.entityManager.find(Patient.class, id);
     }
     
@@ -31,9 +31,5 @@ public class PatientService {
     
     public Patient merge(Patient toMerge) {
         return this.entityManager.merge(toMerge);
-    }
-    
-    public void delete(Patient toDelete) {
-        this.entityManager.remove(toDelete);
     }
 }

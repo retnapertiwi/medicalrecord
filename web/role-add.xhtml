@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="./_tpl/default.xhtml"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:panel>
+            <f:facet name="header">Form Input Data Role</f:facet>
+            <h:form id="form">
+                <h:panelGrid columns="5">
+                <h:outputLabel value="Role" for="role" />
+                <h:outputText value=":*"/>
+                <p:inputText id="name" value="#{roleFaces.role.name}" required="true" requiredMessage="Harus diisi" />
+                <h:message for="name"/><br/><br/>            
+                
+                <p:commandButton update="form, :dataRole" value="Submit" actionListener="#{roleFaces.addRole()}">
+                </p:commandButton>
+            </h:panelGrid>
+            </h:form>
+        </p:panel>
+        
+        <h:form id="dataRole">  
+            <p:dataTable id="basic" var="role" value="#{roleFaces.findAll}">  
+                <p:column id="modelHeader">  
+                    <f:facet name="header">  
+                        Role  
+                    </f:facet>  
+                    <h:outputText value="#{role.name}" />  
+                </p:column>  
+                
+                <p:column>  
+                    <f:facet name="header">  
+                        Action  
+                    </f:facet>
+                    <h:link outcome="/role-edit.xhtml" value="Edit">
+                        <f:param name="id" value="#{role.id}" />
+                    </h:link>
+                    &nbsp;
+                    <h:commandLink value="Delete" actionListener="#{roleFaces.deleteRole(role)}" update=":dataRole">
+                        <f:ajax render="@form"/>
+                    </h:commandLink> 
+                </p:column>
+            </p:dataTable>  
+        </h:form> 
+    </ui:define>
+
+</ui:composition>

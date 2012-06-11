@@ -24,9 +24,9 @@ import javax.faces.bean.RequestScoped;
  *
  * @author Retna P
  */
-@Named(value = "medicalRecordFaces")
+@Named(value = "medicalRecordEditFaces")
 @RequestScoped
-public class MedicalRecordFaces {
+public class MedicalRecordEditFaces {
 
     @EJB
     private MedicalRecordService medicalRecordService;

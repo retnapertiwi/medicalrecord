@@ -21,11 +21,11 @@ public class DoctorService {
     
     public List<Doctor> findAll() {
         return this.entityManager.
-                createQuery("from Doctor", Doctor.class).
+                createQuery("select d from Doctor d", Doctor.class).
                 getResultList();
     }
     
-    public Doctor get(Long id) {
+    public Doctor get(int id) {
         return this.entityManager.find(Doctor.class, id);
     }
     
@@ -38,6 +38,6 @@ public class DoctorService {
     }
     
     public void delete(Doctor toDelete) {
-        this.entityManager.remove(toDelete);
+        this.entityManager.remove(this.entityManager.merge(toDelete));
     }
 }

@@ -9,7 +9,7 @@
 
     <ui:define name="content">
         <p:panel>
-            <f:facet name="header">Form Rekam Medis</f:facet>
+            <f:facet name="header">Form Edit Rekam Medis</f:facet>
             <h:form>
                 <h:panelGrid columns="4">
                 <h:outputLabel value="Nama Pasien" for="name" />
@@ -42,55 +42,6 @@
             </h:panelGrid>
             </h:form>
         </p:panel>
-        
-        <h:form prependId="false">  
-            <p:dataTable id="basic" var="medicalRecord" value="#{medicalRecordFaces.medicalRecord}">  
-                <p:column id="modelHeader">  
-                    <f:facet name="header">  
-                        Nama Pasien 
-                    </f:facet>  
-                    <h:outputText value="#{medicalRecord.patient}" />  
-                </p:column>  
-
-                <p:column>  
-                    <f:facet name="header">  
-                        Tanggal Berobat  
-                    </f:facet>  
-                    <h:outputText value="#{medicalRecord.date}" />  
-                </p:column>
-                
-                <p:column>  
-                    <f:facet name="header">  
-                        Dokter  
-                    </f:facet>  
-                    <h:outputText value="#{medicalRecord.doctor}" />  
-                </p:column>
-                
-                <p:column>  
-                    <f:facet name="header">  
-                        Diagnosa  
-                    </f:facet>  
-                    <h:outputText value="#{medicalRecord.diagnose}" />  
-                </p:column>
-                
-                <p:column>  
-                    <f:facet name="header">  
-                        Obat  
-                    </f:facet>  
-                    <h:outputText value="#{medicalRecordFaces.medicineIds}" />  
-                </p:column>
-                
-                <p:column>  
-                    <f:facet name="header">  
-                        Action  
-                    </f:facet>
-                     <h:commandLink value="Edit" action="edit">
-                        <f:ajax render="@form"/>
-                    </h:commandLink>
-                </p:column>
-
-            </p:dataTable>  
-        </h:form> 
     </ui:define>
 
 </ui:composition>

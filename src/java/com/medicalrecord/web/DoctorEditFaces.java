@@ -7,18 +7,23 @@ package com.medicalrecord.web;
 import com.medicalrecord.model.Doctor;
 import com.medicalrecord.service.DoctorService;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Retna P
  */
-@RequestScoped
-@Named
-public class DoctorFaces {
+@ViewScoped
+@ManagedBean
+public class DoctorEditFaces {
+    
+    private Integer doctorId;
+    
     @EJB
     private DoctorService doctorService;
     
@@ -27,6 +32,13 @@ public class DoctorFaces {
     @PostConstruct
     public void postConstruct() {
         if (this.doctor == null) this.doctor = new Doctor();
+        
+        Map<String, String> params = 
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+	  this.doctorId = Integer.valueOf(params.get("id"));
+          System.out.println("Doctor id is: " + this.doctorId);
+          
+          this.doctor = this.doctorService.get(doctorId);
     }
     
     public Doctor getDoctor() {
@@ -37,14 +49,14 @@ public class DoctorFaces {
         this.doctor = doctor;
     }
     
-    public void deleteDoctor(Doctor doctor){
-        this.doctorService.delete(doctor);
+    public void updateRole() {
+        System.out.println("merge doctor: " + doctor.getName());
+        doctorService.merge(doctor);
     }
     
     public void addDoctor(){
         System.out.println(doctor.getName());
         doctorService.save(doctor);
-        doctor = new Doctor();
     }
     
     public List<Doctor> getFindAll(){

@@ -4,6 +4,7 @@
  */
 package com.medicalrecord.service;
 
+import com.medicalrecord.model.Role;
 import com.medicalrecord.model.User;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -21,15 +22,17 @@ public class UserService {
     
     public List<User> findAll() {
         return this.entityManager.
-                createQuery("from User", User.class).
+                createQuery("select u from User u", User.class).
                 getResultList();
     }
     
-    public User get(Long id) {
+    public User get(int id) {
         return this.entityManager.find(User.class, id);
     }
     
-    public void save(User toSave) {
+    public void save(User toSave, int roleId) {
+        Role role = this.entityManager.getReference(Role.class, roleId);
+        toSave.setRole(role);
         this.entityManager.persist(toSave);
     }
     
@@ -38,6 +41,6 @@ public class UserService {
     }
     
     public void delete(User toDelete) {
-        this.entityManager.remove(toDelete);
+        this.entityManager.remove(this.entityManager.merge(toDelete));
     }
 }
