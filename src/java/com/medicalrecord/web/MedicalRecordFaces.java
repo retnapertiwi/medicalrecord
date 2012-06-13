@@ -7,24 +7,24 @@ package com.medicalrecord.web;
 import com.medicalrecord.model.Doctor;
 import com.medicalrecord.model.MedicalRecord;
 import com.medicalrecord.model.Medicine;
-import com.medicalrecord.model.MedicineRecord;
 import com.medicalrecord.model.Patient;
 import com.medicalrecord.service.DoctorService;
 import com.medicalrecord.service.MedicalRecordService;
 import com.medicalrecord.service.MedicineService;
 import com.medicalrecord.service.PatientService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Retna P
  */
-@Named(value = "medicalRecordFaces")
+@ManagedBean
 @RequestScoped
 public class MedicalRecordFaces {
 
@@ -46,14 +46,16 @@ public class MedicalRecordFaces {
     private Doctor doctor;
     private List<Doctor> doctors;
     private List<Medicine> medicines;
-    private List<Integer> medicineIds;
+    private List<String> medicineIds;
+    private List<MedicalRecord> medicalRecords;
     
     @PostConstruct
     public void postConstruct() {
         if (this.medicalRecord == null) this.medicalRecord = new MedicalRecord();
         if (this.patient == null) this.patient = new Patient();
         if (this.doctor == null) this.doctor = new Doctor();
-        if (this.medicineIds == null) this.medicineIds = new ArrayList<Integer>();
+        if (this.medicineIds == null) this.medicineIds = new ArrayList<String>();
+        if (this.medicalRecords == null) this.medicalRecords = new ArrayList<MedicalRecord>();
     }
     
     public MedicalRecord getMedicalRecord() {
@@ -106,15 +108,20 @@ public class MedicalRecordFaces {
     }
     
     public void addMedicalRecord(){
-        System.out.println(" " + doctor.getId() + " " + medicineIds.size());
-        //this.medicalRecordService.save(this.medicalRecord, this.doctor.getId());
+        System.out.println(">>> " + this.doctor.getId() + " - " + this.patient.getId() + " - " + this.medicineIds);
+        this.medicalRecord.setDate(new Date());
+        this.medicalRecordService.save(
+                this.medicalRecord, 
+                this.doctor.getId(),
+                this.patient.getId(),
+                this.medicineIds);
     }
 
-    public List<Integer> getMedicineIds() {
+    public List<String> getMedicineIds() {
         return medicineIds;
     }
 
-    public void setMedicineIds(List<Integer> medicineIds) {
+    public void setMedicineIds(List<String> medicineIds) {
         this.medicineIds = medicineIds;
     }
     
@@ -132,6 +139,13 @@ public class MedicalRecordFaces {
         this.medicines = medicineService.findAll();
         return this.medicines;
     }
-     
-   
+    
+    public List<MedicalRecord> getMedicalRecords() {
+        this.medicalRecords = this.medicalRecordService.findAll();
+        return medicalRecords;
+    }
+
+    public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
+        this.medicalRecords = medicalRecords;
+    }
 }

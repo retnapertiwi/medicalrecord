@@ -18,10 +18,6 @@
                     <f:selectItems value="#{medicalRecordFaces.patients}" var="p" itemValue="#{p.id}" itemLabel="#{p.name}" />
                 </p:selectOneMenu><br/><br/>
                 
-                <h:outputLabel value="Tanggal Berobat" />
-                <h:outputText value=":"/>
-                <p:calendar value="#{medicalRecordFaces.medicalRecord.date}" id="calender"/><br/><br/>
-                
                 <h:outputLabel value="Dokter" for="doctorName" />
                 <h:outputText value=":"/>
                 <p:selectOneMenu id="doctor" value="#{medicalRecordFaces.doctor.id}" >
@@ -38,18 +34,18 @@
                     <f:selectItems value="#{medicalRecordFaces.medicines}" var="m" itemValue="#{m.id}" itemLabel="#{m.name}" />    
                 </p:selectManyMenu><br/><br/>
                 
-                <p:commandButton value="Submit" action="#{medicalRecordFaces.addMedicalRecord()}"/>
+                <p:commandButton value="Submit" update=":datatable" actionListener="#{medicalRecordFaces.addMedicalRecord}"/>
             </h:panelGrid>
             </h:form>
         </p:panel>
         
-        <h:form prependId="false">  
-            <p:dataTable id="basic" var="medicalRecord" value="#{medicalRecordFaces.medicalRecord}">  
+        <h:form id="datatable" prependId="false">  
+            <p:dataTable id="basic" var="medicalRecord" value="#{medicalRecordFaces.medicalRecords}">  
                 <p:column id="modelHeader">  
                     <f:facet name="header">  
                         Nama Pasien 
                     </f:facet>  
-                    <h:outputText value="#{medicalRecord.patient}" />  
+                    <h:outputText value="#{medicalRecord.patient.name}" />  
                 </p:column>  
 
                 <p:column>  
@@ -63,7 +59,7 @@
                     <f:facet name="header">  
                         Dokter  
                     </f:facet>  
-                    <h:outputText value="#{medicalRecord.doctor}" />  
+                    <h:outputText value="#{medicalRecord.doctor.name}" />  
                 </p:column>
                 
                 <p:column>  
@@ -77,16 +73,7 @@
                     <f:facet name="header">  
                         Obat  
                     </f:facet>  
-                    <h:outputText value="#{medicalRecordFaces.medicineIds}" />  
-                </p:column>
-                
-                <p:column>  
-                    <f:facet name="header">  
-                        Action  
-                    </f:facet>
-                     <h:commandLink value="Edit" action="edit">
-                        <f:ajax render="@form"/>
-                    </h:commandLink>
+                    <h:outputText value="#{medicalRecord.readableMedicine}" />  
                 </p:column>
 
             </p:dataTable>  
