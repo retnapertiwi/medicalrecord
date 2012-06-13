@@ -5,6 +5,7 @@
 package com.medicalrecord.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,11 +25,11 @@ public class MedicineRecord implements Serializable{
     @Column (name="medicinerecord_id")
     private int id;
     
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="medicalrecord_id", nullable=false)
     private MedicalRecord medicalrecord;
     
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="medicine_id", nullable=false)
     private Medicine medicine;
 
